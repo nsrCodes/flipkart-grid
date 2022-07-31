@@ -7,9 +7,17 @@ module.exports = {
     artifacts: './src/artifiacts'
   },
   networks: {
-    matic: {
-      url: "https://polygon-mumbai.g.alchemy.com/v2/YOUR_APP", // todo
-      accounts: ["MATIC_PRIVATE_KEY"]
+    hardhat: {
+      allowUnlimitedContractSize: true,
+      chainId: 1337
+    },
+    localhost: {
+      allowUnlimitedContractSize: true,
+      chainId: 1337
     }
+  //   matic: {
+  //     url: "https://polygon-mumbai.g.alchemy.com/v2/YOUR_APP", // todo
+  //     accounts: ["MATIC_PRIVATE_KEY"]
+  //   }
   },
 };
