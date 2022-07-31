@@ -37,11 +37,9 @@ function ProductList() {
       }
     );
     return newTokenId;
-    // toast info token id
   };
 
   const updateBuyTimestamp = (id) => {
-    console.log("Buying", id);
     return fetch(`http://${APP_CONSTANTS.BACKEND_API}/buy/${id}`);
   };
 
@@ -71,7 +69,7 @@ function ProductList() {
                 buy={async () => {
                   updateBuyTimestamp(product.id);
                   let id = await mintToken(product.id);
-                  toast.success(`Token id is 5`);
+                  toast.success(`Token id is ${id}`);
                 }}
               />
             );

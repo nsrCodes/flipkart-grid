@@ -9,15 +9,12 @@ function ClaimWarranty() {
   const tokenInputRef = createRef();
 
   const getCurrentTime = () => {
-    // todo add query param hack to emulate later days
     return Math.floor(Date.now() / 1000);
   };
 
   const isTokenWarrantyValid = async (tokenData) => {
     // tokenData is just the url for the data to be used
-    console.log("tokenData", tokenData);
     let data = await fetch(tokenData);
-    data = data.json();
 
     // check validity
     const currentTimestamp = getCurrentTime();
@@ -29,35 +26,32 @@ function ClaimWarranty() {
   };
 
   const handleSubmit = async () => {
-    // const provider = new ethers.providers.Web3Provider(window.ethereum);
-    // await provider.send("eth_requestAccounts", []);
-    // // get the end user
-    // const signer = provider.getSigner();
-    // // get the smart contract
-    // const contract = new ethers.Contract(
-    //   APP_CONSTANTS.CONTRACT_ADDRESS,
-    //   Warranty.abi,
-    //   signer
-    // );
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+    // get the end user
+    const signer = provider.getSigner();
+    // get the smart contract
+    const contract = new ethers.Contract(
+      APP_CONSTANTS.CONTRACT_ADDRESS,
+      Warranty.abi,
+      signer
+    );
 
     let tokenInput = tokenInputRef.current.value;
-    // const tokenData = contract.tokenURI(tokenInput);
-    let tokenData = {};
-    if (!tokenData || true) {
-      if (isTokenWarrantyValid(tokenData) || true) {
-        // toast info: warranty for this token has expired
+    const tokenData = contract.tokenURI(tokenInput);
+    if (!tokenData) {
+      if (isTokenWarrantyValid(tokenData)) {
         setTimeout(
           toast.info("The warranty for this product has expired"),
           3000
         );
-        // contract.burn(tokenInput);
+        contract.burn(tokenInput);
       } else {
         toast.success(
           "The product is under the warranty period. The seller has been notified and you will be notified about any later changes via email"
         );
       }
     } else {
-      // toast error: invalid token
       toast.error("Invalid token");
     }
     console.log(tokenInput);
