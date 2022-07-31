@@ -1,14 +1,12 @@
-# Sample Hardhat Project
+# How to run the project
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+This project uses hardhat to create and work with a test network
 
-Try running some of the following tasks:
+If you make any changes to the smart contracts, run `npx hardhat compile` to update the ABIs
 
+Run `npx hardhat node` to start a test network. Use the private keyss from any of the available accounts on the network to get some test ether
+
+To deploy the warranty cotnract, run 
 ```shell
-npx hardhat help
-npx hardhat test
-GAS_REPORT=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
+npx hardhat run scripts/sample-script.js --network localhost
 ```
- npx hardhat run scripts/sample-script.js --network localhost
